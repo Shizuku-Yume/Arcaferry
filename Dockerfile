@@ -9,10 +9,13 @@ WORKDIR /app/src-tauri
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     pkg-config \
+    clang \
+    libclang-dev \
+    llvm-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY src-tauri/ ./
-RUN cargo build --release --bin server
+RUN LIBCLANG_PATH="$(llvm-config --libdir)" cargo build --release --bin server
 
 
 FROM debian:bookworm-slim AS runtime-base
