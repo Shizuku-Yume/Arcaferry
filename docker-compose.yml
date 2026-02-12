@@ -1,0 +1,33 @@
+services:
+  arcaferry-slim:
+    profiles: ["slim"]
+    image: arcaferry:slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: slim
+    environment:
+      ARCAFERRY_PORT: "17236"
+    ports:
+      - "17236:17236"
+    restart: unless-stopped
+
+  arcaferry-full:
+    profiles: ["full"]
+    image: arcaferry:full
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: full
+    environment:
+      ARCAFERRY_PORT: "17236"
+      ARCAFERRY_SIDECAR_SCRIPT_PATH: "/app/scripts/extract_hidden.py"
+      ARCAFERRY_SIDECAR_PROFILE_DIR: "/data/sidecar-profile"
+    ports:
+      - "17236:17236"
+    volumes:
+      - arcaferry-sidecar-profile:/data/sidecar-profile
+    restart: unless-stopped
+
+volumes:
+  arcaferry-sidecar-profile:

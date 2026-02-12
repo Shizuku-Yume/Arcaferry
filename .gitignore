@@ -1,0 +1,59 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+*.local
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+target/
+src-tauri/target/
+extension/dist/
+extension/build/
+coverage/
+.arcaferry-sidecar-profile/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Vite
+.vite/
+
+# Editor directories and files
+.vscode/
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# AGENTS.md (AI context, not for distribution)
+AGENTS.md
+agents.md
+**/AGENTS.md
+**/agents.md

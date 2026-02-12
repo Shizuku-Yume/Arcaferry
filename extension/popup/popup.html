@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=380, initial-scale=1.0">
+  <title>Arcaferry Lite</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- 主容器 -->
+  <div class="app-container">
+    <!-- 顶部进度条 -->
+    <header class="progress-header">
+      <div class="brand-strip">
+        <div class="brand-identity">
+          <img src="../icons/icon_tarot.svg" alt="Arcaferry" class="brand-logo">
+          <div class="brand-copy">
+            <span class="brand-name">Arcaferry Lite</span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-info">
+        <span class="progress-text" id="progressText">准备就绪</span>
+        <span class="progress-step" id="progressStep">步骤 0/4</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </header>
+
+    <!-- 阶段 1: 开始界面 -->
+    <section class="stage stage-1 active" data-stage="1">
+      <div class="stage-content">
+        <div class="start-container">
+          <h1 class="start-title">第一步：进入可提取页面</h1>
+          <p class="start-subtitle">请先打开 Quack 的分享页面或对话页面，然后点击「开始提取」。</p>
+          
+          <button id="startBtn" class="start-button">
+            <span class="start-button-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </span>
+            <span class="start-button-text">开始提取</span>
+          </button>
+          
+          <p class="start-hint" id="pageTypeHint">检测到当前页面类型</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 阶段 2: 引导进入对话 (Share页面特有) -->
+    <section class="stage stage-2" data-stage="2">
+      <div class="stage-content">
+        <div class="guide-container">
+          <div class="guide-icon-wrapper">
+            <svg class="guide-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          
+          <h2 class="guide-title">请进入对话界面</h2>
+          <p class="guide-description">
+            检测到您当前在 Share 页面，请点击「开始聊天」进入对话界面。进入后扩展会自动继续提取。
+          </p>
+          
+          <div class="guide-steps">
+            <div class="guide-step">
+              <span class="guide-step-number">1</span>
+              <span class="guide-step-text">点击分享页面的「开始聊天」按钮</span>
+            </div>
+            <div class="guide-step">
+              <span class="guide-step-number">2</span>
+              <span class="guide-step-text">进入聊天界面即可</span>
+            </div>
+            <div class="guide-step">
+              <span class="guide-step-number">3</span>
+              <span class="guide-step-text">若卡在此步骤，请刷新网页后重新进入聊天界面</span>
+            </div>
+          </div>
+          
+          <div class="guide-status">
+            <span class="status-indicator waiting"></span>
+            <span class="status-text" id="guideStatusText">等待进入对话页面...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 阶段 3: 提取隐藏设定 -->
+    <section class="stage stage-3" data-stage="3">
+      <div class="stage-content">
+        <div class="hidden-settings-container">
+          <div class="section-header">
+            <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <circle cx="12" cy="11" r="3"/>
+            </svg>
+            <h3 class="section-title">提取隐藏设定</h3>
+          </div>
+          
+          <!-- 提示词区域 -->
+          <div class="prompt-section">
+            <label class="field-label">
+              <span>请复制以下提示词发送给 AI</span>
+              <button id="copyPromptBtn" class="copy-btn-small">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                复制
+              </button>
+            </label>
+            <div class="prompt-box">
+              <textarea id="inductionPrompt" class="prompt-textarea" readonly></textarea>
+            </div>
+          </div>
+          
+          <!-- 操作指引 -->
+          <div class="instruction-section">
+            <div class="instruction-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              <span>操作步骤</span>
+            </div>
+            <ol class="instruction-list">
+              <li>点击「复制提示词」按钮</li>
+              <li>在对话输入框中粘贴并发送</li>
+              <li>等待 AI 回复完成后，点击消息下方的「编辑消息」按钮</li>
+              <li>在「编辑消息」输入框中复制 AI 的完整回复内容</li>
+              <li>粘贴到下方输入框中</li>
+            </ol>
+          </div>
+          
+          <!-- AI 回复输入 -->
+          <div class="response-section">
+            <label class="field-label">粘贴 AI 回复</label>
+            <textarea id="aiResponse" class="response-textarea" placeholder="在此粘贴 AI 的回复内容..."></textarea>
+            <button id="parseResponseBtn" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              解析回复
+            </button>
+          </div>
+          
+          <!-- 解析结果 -->
+          <div class="parsed-result hidden" id="parsedResult">
+            <div class="result-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>已解析 <span id="parsedCount">0</span> 个隐藏设定</span>
+            </div>
+          </div>
+          
+          <!-- 跳过按钮 -->
+          <button id="skipStep3Btn" class="btn-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+            跳过此步骤
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 阶段 4: 完成下载 -->
+    <section class="stage stage-4" data-stage="4">
+      <div class="stage-content">
+        <div class="completion-container">
+          <div class="success-animation">
+            <div class="success-icon-wrapper">
+              <svg class="success-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+          </div>
+          
+          <h2 class="completion-title">角色卡提取完成</h2>
+          
+          <!-- 卡片预览 -->
+          <div class="card-preview-card">
+            <div class="card-preview-avatar">
+              <img id="avatarPreview" src="" alt="角色头像">
+            </div>
+            <div class="card-preview-info">
+              <div class="card-preview-name" id="cardName">角色名称</div>
+              <div class="card-preview-meta" id="cardMeta">
+                <span class="meta-item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span id="attrCount">0</span> 属性
+                </span>
+                <span class="meta-item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                  </svg>
+                  <span id="worldbookCount">0</span> 世界书
+                </span>
+                <span class="meta-item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span id="hiddenCount">0</span> 隐藏设定
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 下载操作 -->
+          <div class="download-actions">
+            <button id="downloadPngBtn" class="download-btn download-png">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              下载 PNG
+            </button>
+            <button id="downloadJsonBtn" class="download-btn download-json">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              JSON
+            </button>
+            <button id="copyJsonBtn" class="download-btn copy-json">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              复制
+            </button>
+          </div>
+          
+          <!-- 重新开始 -->
+          <button id="restartBtn" class="restart-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"/>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            </svg>
+            开始新的提取
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <a href="https://github.com/Shizuku-Yume/Arcaferry" target="_blank" class="footer-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <div class="footer-right">
+        <button id="themeToggle" class="footer-theme-btn" title="切换主题">
+          <svg id="themeIconLight" class="theme-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg id="themeIconDark" class="theme-icon hidden" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg id="themeIconSystem" class="theme-icon hidden" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </button>
+        <span class="version">v1.1.0</span>
+        <button id="resetBtn" class="reset-btn" title="重置">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast 通知 -->
+  <div id="toast" class="toast hidden">
+    <div class="toast-icon" id="toastIcon"></div>
+    <div class="toast-message" id="toastMessage"></div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

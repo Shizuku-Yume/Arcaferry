@@ -1,0 +1,62 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ferry-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="30%" stop-color="#94a3b8"/>
+      <stop offset="60%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="ferry-gold-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="50%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="ferry-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="ferry-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="2" y="2" width="60" height="60" rx="6" fill="url(#ferry-green)" stroke="url(#ferry-gold)" stroke-width="2"/>
+
+  <circle cx="32" cy="32" r="28" fill="url(#ferry-glow)"/>
+
+  <g transform="translate(32, 32) scale(0.38)">
+    <circle cx="0" cy="0" r="68" fill="none" stroke="url(#ferry-gold)" stroke-width="3"/>
+    <circle cx="0" cy="0" r="62" fill="none" stroke="url(#ferry-gold)" stroke-width="1" opacity="0.5"/>
+    <g stroke="url(#ferry-gold)" stroke-width="2">
+      <line x1="0" y1="-62" x2="0" y2="62"/>
+      <line x1="-54" y1="-31" x2="54" y2="31"/>
+      <line x1="-54" y1="31" x2="54" y2="-31"/>
+    </g>
+    <circle cx="0" cy="0" r="36" fill="url(#ferry-green)" stroke="url(#ferry-gold)" stroke-width="2.5"/>
+    <circle cx="0" cy="0" r="30" fill="none" stroke="url(#ferry-gold)" stroke-width="1" opacity="0.5"/>
+    <circle cx="0" cy="0" r="20" fill="none" stroke="url(#ferry-gold)" stroke-width="1.5"/>
+    <g fill="url(#ferry-gold-light)">
+      <path d="M0 -54 L-8 -42 L8 -42 Z"/>
+      <path d="M47 -27 L39 -17 L49 -14 Z"/>
+      <path d="M47 27 L49 14 L39 17 Z"/>
+      <path d="M0 54 L-8 42 L8 42 Z"/>
+      <path d="M-47 27 L-49 14 L-39 17 Z"/>
+      <path d="M-47 -27 L-39 -17 L-49 -14 Z"/>
+    </g>
+    <circle cx="0" cy="-68" r="5" fill="url(#ferry-gold-light)"/>
+    <circle cx="59" cy="-34" r="5" fill="url(#ferry-gold-light)"/>
+    <circle cx="59" cy="34" r="5" fill="url(#ferry-gold-light)"/>
+    <circle cx="0" cy="68" r="5" fill="url(#ferry-gold-light)"/>
+    <circle cx="-59" cy="34" r="5" fill="url(#ferry-gold-light)"/>
+    <circle cx="-59" cy="-34" r="5" fill="url(#ferry-gold-light)"/>
+    <circle cx="0" cy="0" r="12" fill="url(#ferry-gold)"/>
+    <circle cx="0" cy="0" r="8.5" fill="url(#ferry-gold-light)"/>
+    <circle cx="0" cy="0" r="4.5" fill="#fff"/>
+    <path d="M-26 -26 Q0 -36, 26 -26" fill="none" stroke="url(#ferry-gold)" stroke-width="1" opacity="0.6"/>
+    <path d="M26 -26 Q36 0, 26 26" fill="none" stroke="url(#ferry-gold)" stroke-width="1" opacity="0.6"/>
+    <path d="M26 26 Q0 36, -26 26" fill="none" stroke="url(#ferry-gold)" stroke-width="1" opacity="0.6"/>
+    <path d="M-26 26 Q-36 0, -26 -26" fill="none" stroke="url(#ferry-gold)" stroke-width="1" opacity="0.6"/>
+  </g>
+</svg>

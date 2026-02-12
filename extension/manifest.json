@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "Arcaferry Lite",
+  "version": "1.0.1",
+  "description": "Extract character cards from Quack.im - No backend required",
+
+  "icons": {
+    "16": "icons/icon_16.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png",
+    "256": "icons/icon_256.png"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon_16.png",
+      "32": "icons/icon_32.png",
+      "48": "icons/icon_48.png"
+    },
+    "default_title": "Arcaferry Lite"
+  },
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "downloads",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://quack.im/*"
+  ],
+
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://quack.im/discovery/share/*"
+      ],
+      "js": ["content/share-page.js", "content/chat-page.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://quack.im/dream/*"
+      ],
+      "js": ["content/chat-page.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/*.js"],
+      "matches": ["https://quack.im/*"]
+    }
+  ]
+}

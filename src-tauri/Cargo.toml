@@ -1,0 +1,51 @@
+[package]
+name = "arcaferry"
+version = "0.1.0"
+description = "Character card scraper for Arcamage"
+authors = ["you"]
+edition = "2021"
+default-run = "server"
+
+[lib]
+name = "arcaferry_lib"
+
+[[bin]]
+name = "server"
+path = "src/bin/server.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+thiserror = "2"
+
+wreq = { version = "^6.0.0-rc", features = ["json", "cookies", "multipart", "stream"] }
+wreq-util = { version = "^3.0.0-rc", features = ["emulation-rand"] }
+
+tokio = { version = "1", features = ["full"] }
+futures = "0.3"
+
+base64 = "0.22"
+
+flate2 = "1"
+crc32fast = "1"
+
+url = "2"
+
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+
+regex = "1"
+strum = "0.27"
+async-trait = "0.1"
+lazy_static = "1"
+
+axum = { version = "0.7", features = ["macros"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors"] }
+
+image = { version = "0.24", default-features = false, features = ["png"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
