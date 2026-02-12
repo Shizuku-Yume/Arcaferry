@@ -6,6 +6,11 @@ ARG PYTHON_VERSION=3.12
 FROM rust:${RUST_VERSION}-bookworm AS rust-builder
 WORKDIR /app/src-tauri
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    cmake \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY src-tauri/ ./
 RUN cargo build --release --bin server
 
